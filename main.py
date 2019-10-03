@@ -34,7 +34,7 @@ add_form = """
 
 def get_current_watchlist():
     # returns user's current watchlist--hard coded for now
-    return [ "Star Wars", "Minions", "Freaky Friday", "My Favorite Martian" ]
+    return [ "Pineapple Express", "Hot Tub Time Machine", "Step Brothers", "Dumb and Dumber", "Tropic Thunder" ]
 
 # a form for crossing off watched movies
 # (first we build a dropdown from the current watchlist items)
@@ -71,18 +71,15 @@ def crossoff_movie():
 
     if crossed_off_movie not in get_current_watchlist():
         # the user tried to cross off a movie that isn't in their list,
-        # so we redirect back to the front page and tell them what went wrong
-        error = "'{0}' is not in your Watchlist, so you can't cross it off!".format(crossed_off_movie)
-
-        # redirect to homepage, and include error as a query parameter in the URL
+        error = "'{0}' is not in your Watchlist, so you can't cross it off.".format(crossed_off_movie)
         return redirect("/?error=" + error)
+         
+        # if we didn't redirect by now, then all is well
+        crossed_off_movie_element = "<strike>" + crossed_off_movie + "</strike>"
+        confirmation = crossed_off_movie_element + " has been crossed off your Watchlist."
+        content = page_header + "<p>" + confirmation + "</p>" + page_footer
 
-    # if we didn't redirect by now, then all is well
-    crossed_off_movie_element = "<strike>" + crossed_off_movie + "</strike>"
-    confirmation = crossed_off_movie_element + " has been crossed off your Watchlist."
-    content = page_header + "<p>" + confirmation + "</p>" + page_footer
-
-    return content
+        return content
 
 
 @app.route("/add", methods=['POST'])
@@ -91,12 +88,21 @@ def add_movie():
 
     # TODO 
     # 'escape' the user's input so that if they typed HTML, it doesn't mess up our site
+    new_movie = cgi.escape(new_movie, quote=True)
     
     # TODO 
     # if the user typed nothing at all, redirect and tell them the error
+    if (not new_movie) or (new_movie.strip() == ""):
+        # redirect back to the front page and tell them what went wrong
+        error = "Please specify a movie to add to your WatchList.".format(new_movie)
+        # redirect to homepage, and include error as a query parameter in the URL
+        return redirect("/?error=" + error)
 
     # TODO 
     # if the user wants to add a terrible movie, redirect and tell them not to add it b/c it sucks
+    if new_movie in terrible_movies:
+        error = "Do not add '{0}' because it sucks.".format(new_movie)
+        return redirect("/?error=" + error)
 
     # build response content
     new_movie_element = "<strong>" + new_movie + "</strong>"
