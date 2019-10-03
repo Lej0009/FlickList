@@ -73,7 +73,7 @@ def crossoff_movie():
         # the user tried to cross off a movie that isn't in their list,
         error = "'{0}' is not in your Watchlist, so you can't cross it off.".format(crossed_off_movie)
         return redirect("/?error=" + error)
-         
+    else:    
         # if we didn't redirect by now, then all is well
         crossed_off_movie_element = "<strike>" + crossed_off_movie + "</strike>"
         confirmation = crossed_off_movie_element + " has been crossed off your Watchlist."
@@ -101,15 +101,16 @@ def add_movie():
     # TODO 
     # if the user wants to add a terrible movie, redirect and tell them not to add it b/c it sucks
     if new_movie in terrible_movies:
-        error = "Do not add '{0}' because it sucks.".format(new_movie)
+        error = "You do not want to watch '{0}', that movie sucks.".format(new_movie)
         return redirect("/?error=" + error)
 
-    # build response content
-    new_movie_element = "<strong>" + new_movie + "</strong>"
-    sentence = new_movie_element + " has been added to your Watchlist!"
-    content = page_header + "<p>" + sentence + "</p>" + page_footer
+    else:
+        # build response content
+        new_movie_element = "<strong>" + new_movie + "</strong>"
+        sentence = new_movie_element + " has been added to your Watchlist!"
+        content = page_header + "<p>" + sentence + "</p>" + page_footer
 
-    return content
+        return content
 
 
 @app.route("/")
