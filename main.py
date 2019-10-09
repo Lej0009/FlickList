@@ -24,6 +24,14 @@ def get_current_watchlist():
 # Clicking the button will result in a confirmation message that the movie has been watched. 
 # So you'll need to add a form within the <li> tags of "My Watchlist"
 # Once this is done, delete the "crossoff" form in edit.html
+@app.route('/watchedit', methods=['POST'])
+def iwatchedit():
+    watchedmovie = request.form['crossed-off-movie']
+
+    return render_template('watchedit.html', crossed_off_movie=watchedmovie)
+
+
+
 
 # TODO:
 # Make a ratings.html template which lists all movies that have been crossed off.
@@ -82,6 +90,11 @@ def add_movie():
     new_movie_escaped = cgi.escape(new_movie, quote=True)
 
     return render_template('add-confirmation.html', movie=new_movie)
+
+@app.route('/ratings')
+def ratings():
+    watchlist = get_current_watchlist()
+    return render_template('ratings.html')
 
 
 @app.route("/")

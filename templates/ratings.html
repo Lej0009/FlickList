@@ -1,0 +1,9 @@
+{% extends "base.html" %} {% block content %}
+<p>
+    {% for movie in watchlist: %}
+    <li>
+        {{ movie }}
+    </li>
+    {% endfor %}
+</p>
+{% endblock %}
