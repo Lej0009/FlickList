@@ -1,9 +1,21 @@
 {% extends "base.html" %} {% block content %}
+<h2>Movies I Have Watched</h2>
 <p>
-    {% for movie in watchlist: %}
-    <li>
-        {{ movie }}
-    </li>
-    {% endfor %}
+    <ul>
+        {% for movie in watched_movies %}
+        <li>
+            <form>
+                <select>
+                    {{ movie }} 
+                    <option value="*">*</option>
+                    <option value="**">**</option>
+                    <option value="***">***</option>
+                    <option value="****">****</option>
+                    <option value="*****">*****</option>
+                </select>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
 </p>
 {% endblock %}

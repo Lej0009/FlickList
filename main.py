@@ -26,11 +26,11 @@ def get_current_watchlist():
 # Once this is done, delete the "crossoff" form in edit.html
 @app.route('/watchedit', methods=['POST'])
 def iwatchedit():
+    watched_movies = []
     watchedmovie = request.form['crossed-off-movie']
+    watched_movies.append(watchedmovie)
 
     return render_template('watchedit.html', crossed_off_movie=watchedmovie)
-
-
 
 
 # TODO:
@@ -41,8 +41,14 @@ def iwatchedit():
 # And with a button that says "Rate It!" to submit the user's rating.
 # Give this form the action of "/rating-confirmation" and the method of post.
 
+
+
 # TODO: 
 # Add a function, movie_ratings, to handle a get request and render the template at "/ratings"
+@app.route('/ratings', methods=['GET'])
+def rate_movie():
+   
+    return render_template('ratings.html')
 
 # TODO:
 # Add a function, get_watched_movies, to get the list of crossed off movies. 
@@ -91,7 +97,7 @@ def add_movie():
 
     return render_template('add-confirmation.html', movie=new_movie)
 
-@app.route('/ratings')
+@app.route('/ratings', methods=['GET'])
 def ratings():
     watchlist = get_current_watchlist()
     return render_template('ratings.html')
