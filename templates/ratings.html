@@ -1,14 +1,12 @@
-{% extends "base.html" %}
-
-{% block content %}
+{% extends "base.html" %} {% block content %}
 <h2>Movies I Have Watched:</h2>
 
 <ul>
-  {% for movie in movies %}
+    {% for movie in movies %}
     <li>
-      <h3>{{ movie.name }}</h3>
-      <form action="/rating-confirmation" method="post">
-        <label>
+        <h3>{{ movie.name }}</h3>
+        <form action="/rating-confirmation" method="post">
+            <label>
           My Rating:
           <select name="rating">
             <!-- TODO: If the user has rated a movie, make the select box default to that rating when they visit this page.
@@ -19,11 +17,11 @@
             {% endfor %}
           </select>
         </label>
-        <input type="hidden" name="movie_id" value="{{ movie.id }}"/>
-        <input type="submit" value="Rate it!"/> 
-      </form>
+            <input type="hidden" name="movie_id" value="{{ movie.id }}" />
+            <input type="submit" value="Rate it!" />
+        </form>
     </li>
-  {% endfor %}
+    {% endfor %}
 </ul>
 
 {% endblock %}
