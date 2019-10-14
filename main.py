@@ -20,6 +20,7 @@ class Movie(db.Model):
     def __init__(self, name):
         self.name = name
         self.watched = False
+        self.rating = ''
 
     def __repr__(self):
         return '<Movie %r>' % self.name
@@ -60,7 +61,8 @@ def rate_movie():
     
     # TODO: make a persistent change to the model so that you STORE the rating in the database
     # (Note: the next TODO is in templates/ratings.html)
-    db.session.add(rating)
+    rate = Movie.rating
+    db.session.add(rate)
     db.session.commit()
 
     
