@@ -13,7 +13,7 @@ class Movie(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120))
     watched = db.Column(db.Boolean)
-    ratings = db.Column(db.String(5))
+    rating = db.Column(db.String(5))
     
     # TODO: add a ratings column to the Movie table
 
@@ -40,7 +40,7 @@ def get_watched_movies():
     # For now, we are just pretending
     # returns the list of movies the user has already watched and crossed off
     return Movie.query.filter_by(watched=True).all()
-    
+
 # Create a new route called rate_movie which handles a POST request on /rating-confirmation
 @app.route("/rating-confirmation", methods=['POST'])
 def rate_movie():
@@ -60,6 +60,9 @@ def rate_movie():
     
     # TODO: make a persistent change to the model so that you STORE the rating in the database
     # (Note: the next TODO is in templates/ratings.html)
+    db.session.add(rating)
+    db.session.commit()
+
     
     return render_template('rating-confirmation.html', movie=movie, rating=rating)
 
