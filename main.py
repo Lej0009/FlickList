@@ -58,11 +58,15 @@ def rate_movie():
         return redirect("/?error=" + error)
 
     # if we didn't redirect by now, then all is well
+    if len(rating)>5:
+        error = "Not a valid rating"
+        return redirect("/ratings?error=" + error)
     
     # TODO: make a persistent change to the model so that you STORE the rating in the database
     # (Note: the next TODO is in templates/ratings.html)
-    rate = Movie.rating
-    db.session.add(rate)
+    
+    movie.rating = rating
+    db.session.add(movie)
     db.session.commit()
 
     
